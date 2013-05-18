@@ -1,0 +1,31 @@
+{
+    "name": "mongator/laravel",
+    "type": "library",
+    "description": "Provider to use Mongator with Laravel framework",
+    "keywords": ["laravel", "database", "mongator", "odm"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Máximo Cuadros", 
+            "email": "mcuadros@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=5.3.0",
+        "mongator/mongator": "dev-master",
+    },
+    "suggest": {
+        "ext-yaml": "Needed to reaad class configs in YAML files",
+        "cilex/console-service-provider": "Needed if you want to use console commands, useful to generate the classes and indexes"
+    },
+    "require-dev": {
+        "illuminate/support": "4.0.x",
+        "illuminate/console": "4.0.x"
+    },
+    "autoload": {
+        "psr-0": {
+            "Mongator\\Laravel": "src/"
+        }
+    }
+}
