@@ -14,7 +14,7 @@ Requirements
 Installation
 ------------
 
-Add `mongator/laravel-newrelic` to your composer requirements, you can see [the package information on Packagist.](https://packagist.org/packages/mongator/laravel):
+Add `mongator/laravel` to your composer requirements, you can see [the package information on Packagist.](https://packagist.org/packages/mongator/laravel):
 
 ```JSON
 {
@@ -66,7 +66,7 @@ Usage
 
 ```PHP
 Route::get('/view', function() { 
-    $articleRepository = Mongator::getRepository('Model\Article');
+    $articleRepository = Mongator::getRepository('Article');
     $article = $articleRepository->findOneById($id);
 
 
