@@ -69,7 +69,6 @@ Route::get('/view', function() {
     $articleRepository = Mongator::getRepository('Article');
     $article = $articleRepository->findOneById($id);
 
-
     return View::make($article);
 });
 ```
