@@ -1,4 +1,4 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php
 
 /*
 |--------------------------------------------------------------------------
@@ -11,7 +11,7 @@
 |
 */
 
-$config['mongator_connection_dsn'] = 'mongodb://localhost:27017';
+$config['connection_dsn'] = 'mongodb://localhost:27017';
 
 /*
 |--------------------------------------------------------------------------
@@ -24,7 +24,7 @@ $config['mongator_connection_dsn'] = 'mongodb://localhost:27017';
 |
 */
 
-$config['mongator_connection_database'] = 'database';
+$config['connection_database'] = 'database';
 
 /*
 |--------------------------------------------------------------------------
@@ -37,32 +37,19 @@ $config['mongator_connection_database'] = 'database';
 |
 */
 
-$config['mongator_connection_name'] = 'default';
+$config['connection_name'] = 'default';
+
 
 /*
 |--------------------------------------------------------------------------
-| Mongator Models input path
+| Query Logger
 |--------------------------------------------------------------------------
 |
-| The input path of the classes, A valid dir with YAML definitions of the 
-| config classes, you must save the YAMLs config classes in this path. 
+| If True enable the Mongator logger  
 |
 */
 
-$config['mongator_models_input'] = __DIR__ . '/../input/';
-
-/*
-|--------------------------------------------------------------------------
-| Models namespace
-|--------------------------------------------------------------------------
-|
-| The output path of the classes. 
-| Example: 
-| If you models are call 'MyApp\Models\Article' you must set this as 'MyApp'
-|
-*/
-
-$config['mongator_models_namespace'] = 'Model';
+$config['logger'] = true;
 
 
 /*
@@ -75,7 +62,20 @@ $config['mongator_models_namespace'] = 'Model';
 |
 */
 
-$config['mongator_metadata_class'] = 'Model\Mapping\Metadata';
+$config['metadata_class'] = 'Mapping\Metadata';
+
+/*
+|--------------------------------------------------------------------------
+| Mongator Models input path
+|--------------------------------------------------------------------------
+|
+| The input path of the classes, A valid dir with YAML definitions of the 
+| config classes, you must save the YAMLs config classes in this path. 
+|
+*/
+
+$config['models_input'] = __DIR__ . '/../../../../app/schema/';
+
 
 /*
 |--------------------------------------------------------------------------
@@ -87,7 +87,19 @@ $config['mongator_metadata_class'] = 'Model\Mapping\Metadata';
 |
 */
 
-$config['mongator_models_output'] = __DIR__ . '/../output/';
+$config['models_output'] = __DIR__ . '/../../../../app/models/';
 
+/*
+|--------------------------------------------------------------------------
+| Mongator Extensions
+|--------------------------------------------------------------------------
+|
+| The extensions allow you to add functionalities to documents, 
+| repositories, queries, in an extremely flexible way. It is also very 
+| amusing and easy. Just add the instances of the extensions.
+|
+*/
+
+$config['extensions'] = array();
 
 return $config;

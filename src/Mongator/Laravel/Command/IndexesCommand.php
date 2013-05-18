@@ -9,27 +9,20 @@
  */
 
 
-namespace Mongator\Silex\Command;
-use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\OutputInterface;
+namespace Mongator\Laravel\Command;
+use Illuminate\Console\Command;
+use Mongator;
 
 class IndexesCommand extends Command
 {
-    protected function configure()
+    protected $name = 'mongator:indexes';
+    protected $description = 'Ensure the indexes of all repositories';
+
+    protected function fire()
     {
-        $this
-            ->setName('mongator:indexes')
-            ->setDescription('Ensure the indexes of all repositories');
-    }
+        $this->comment('Ensuring Indexes...');        
+        Mongator::ensureAllIndexes();
 
-    protected function execute(InputInterface $input, OutputInterface $output)
-    {
-        $app = $this->getApplication()->getContainer();
-
-        $output->write('<info>Ensuring Indexes... </info>', false);        
-        $app['mongator']->ensureAllIndexes();
-
-        $output->writeln('<comment>Done</comment>');
+        $this->info('Done');
     }
 }

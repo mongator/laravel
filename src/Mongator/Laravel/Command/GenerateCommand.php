@@ -8,42 +8,31 @@
  * file that was distributed with this source code.
  */
 
-
-namespace Mongator\Silex\Command;
-use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\OutputInterface;
+namespace Mongator\Laravel\Command;
+use Illuminate\Console\Command;
+use Config, Mondator;
 
 class GenerateCommand extends Command
 {
-    protected function configure()
-    {
-        $this
-            ->setName('mongator:generate')
-            ->setDescription('Process config classes and generate the files of the classes');
-    }
+    protected $name = 'mongator:generate';
+    protected $description = 'Process config classes and generate the files of the classes';
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function fire()
     {
-        $app = $this->getApplication()->getContainer();
 
-        $output->write('<info>Generating models... </info>', false);        
+        $this->comment('Generating models...', false);        
         
-        if ( isset($app['mongator.classes.yaml.path']) && $app['mongator.classes.yaml.path'] ) {
-            if ( !is_dir($path = $app['mongator.classes.yaml.path']) ) {
-                throw new \LogicException(
-                    'Registered "mongator.classes.yaml.path" not is a valid path.'
-                );
-            }
-        
-            $app['mongator.classes.config'] = $this->readYAMLs($path);
-            //var_dump( $app['mongator.classes.config']);
+        $path = Config::get('mongator::models_input');
+        if ( !is_dir($path) ) {
+            throw new \LogicException(
+                'Registered "mongator::models_input" not is a valid path.'
+            );
         }
+        
+        Mondator::setConfigClasses($this->readYAMLs($path));
+        Mondator::process();
 
-        $app['mondator']->setConfigClasses($app['mongator.classes.config']);
-        $app['mondator']->process();
-
-        $output->writeln('<comment>Done</comment>');
+        $this->info('Done');
     }
 
 

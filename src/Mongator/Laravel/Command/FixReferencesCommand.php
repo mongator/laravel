@@ -8,28 +8,20 @@
  * file that was distributed with this source code.
  */
 
-
-namespace Mongator\Silex\Command;
-use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\OutputInterface;
+namespace Mongator\Laravel\Command;
+use Illuminate\Console\Command;
+use Mongator;
 
 class FixReferencesCommand extends Command
 {
-    protected function configure()
+    protected $name = 'mongator:fix';
+    protected $description = 'Fixes all the missing references';
+
+    protected function fire()
     {
-        $this
-            ->setName('mongator:fix')
-            ->setDescription('Fixes all the missing references.');
-    }
+        $this->comment('Fixing missing References...');        
+        Mongator::fixAllMissingReferences();
 
-    protected function execute(InputInterface $input, OutputInterface $output)
-    {
-        $app = $this->getApplication()->getContainer();
-
-        $output->write('<info>Fixing missing References... </info>', false);        
-        $app['mongator']->fixAllMissingReferences();
-
-        $output->writeln('<comment>Done</comment>');
+        $this->info('Done');
     }
 }
