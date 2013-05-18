@@ -8,15 +8,13 @@ Requirements
 ------------
 
 * PHP 5.3.x
-* Unix system
 * Laravel 4
 * mongator/mongator
 
 Installation
 ------------
 
-The recommended way to install Mongator/Laravel is [through composer](http://getcomposer.org).
-You can see [the package information on Packagist.](https://packagist.org/packages/mongator/silex)
+Add `mongator/laravel-newrelic` to your composer requirements, you can see [the package information on Packagist.](https://packagist.org/packages/mongator/laravel):
 
 ```JSON
 {
@@ -26,33 +24,62 @@ You can see [the package information on Packagist.](https://packagist.org/packag
 }
 ```
 
+Now, run `composer update`
+
+Once the package is installed, open your `app/config/app.php` configuration file and locate the `providers` key.  Add the following line to the end:
+
+```PHP
+    ...
+    'Mongator\Laravel\MongatorServiceProvider',
+    ...
+```
+
+Next, locate the `aliases` key and add the following lines:
+
+```PHP
+    ...
+    'Mondator'        => 'Mongator\Laravel\Facades\Mondator',
+    'Mongator'        => 'Mongator\Laravel\Facades\Mongator',
+    ...
+```
+
+Now just create a YAML config classes dir at your ```app``` folder: 
+
+```bash
+mkdir app/schema/
+```
+
 Parameters
 ------------
 
-* ```mongator.connection.dsn``` (default 'mongodb://localhost:27017'): database connection string
-* ```mongator.connection.database```: the database name
-* ```mongator.connection.name``` (default 'default'): the name of the connection 
-* ```mongator.metadata.class```: The metadata factory class name 
-* ```mongator.logger``` (default null): instance of a logger class
-* ```mongator.cache.fields``` (default ArrayCache): instance of a mongator cache driver used in fields cache
-* ```mongator.cache.data``` (default ArrayCache): instance of a mongator cache driver used in data cache
-* ```mongator.extensions``` (default Array()): array of extension instances 
-* ```mongator.models.output```: output path of the classes
-* ```mongator.classes.config``` (default Array()): The config classes contain the information of the classes
-* ```mongator.classes.yaml.path```: A valid dir with YAML definitions of the config classes
-
+* ```connection_dsn``` (default 'mongodb://localhost:27017'): database connection string
+* ```connection_database```: the database name
+* ```connection_name``` (default 'default'): the name of the connection 
+* ```models_output``` (default 'app/models/'): output path of the classes
+* ```models_input``` (default 'app/schema/'): A valid dir with YAML definitions of the config classes
+* ```metadata_class```: The metadata factory class name 
+* ```logger``` (default false): enable the query logger
+* ```extensions``` (default Array()): array of extension instances 
 
 Usage
 ------------
 
 ```PHP
-use Symfony\Component\HttpFoundation\Response;
-
-$app->post('/article', function ($id) use ($app) {
-    $articleRepository = $app['mongator']->getRepository('Model\Article');
+Route::get('/view', function() { 
+    $articleRepository = Mongator::getRepository('Model\Article');
     $article = $articleRepository->findOneById($id);
 
-    return new Response('', 201);
+
+    return View::make($article);
+});
+```
+
+```PHP
+Route::get('/create', function() { 
+    $article = Mongator::create('Article');
+    $article->setAuthor('John Doe');
+    $article->setTitle('Lorem ipsum dolor sit amet, consectetur adipisicing elit.')
+    $article->save();
 });
 ```
 
@@ -60,13 +87,12 @@ $app->post('/article', function ($id) use ($app) {
 
 Commands
 ------------
-With this package you can find three useful commands:
+With this package you can find three useful commands, thought ```php artisan```:
 
 * ```mongator:generate```: Processes config classes and generates the files of the classes.
-* ```mongator:indexes```: Ensures the indexes of all repositories
+* ```mongator:_indexes```: Ensures the indexes of all repositories
 * ```mongator:fix```: Fixes all the missing references.
 
-You need the suggested package ```cilex/console-service-provider```to use console commands on you Silex setup.
 
 Tests
 -----

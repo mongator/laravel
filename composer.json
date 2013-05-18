@@ -17,6 +17,7 @@
         "mongator/mongator": "dev-master"
     },
     "require-dev": {
+        "illuminate/foundation": "4.0.x",
         "illuminate/support": "4.0.x",
         "illuminate/console": "4.0.x"
     },
