@@ -82,7 +82,7 @@ Route::get('/create', function() {
 });
 ```
 
-** Remember, before using the models you must generate them. (You can use the command provided with this package.) **
+> Remember, before using the models you must generate them. (You can use the command provided with this package.)
 
 Commands
 ------------
