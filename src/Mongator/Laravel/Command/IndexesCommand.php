@@ -8,7 +8,6 @@
  * file that was distributed with this source code.
  */
 
-
 namespace Mongator\Laravel\Command;
 use Illuminate\Console\Command;
 use Mongator;
@@ -20,7 +19,7 @@ class IndexesCommand extends Command
 
     protected function fire()
     {
-        $this->comment('Ensuring Indexes...');        
+        $this->comment('Ensuring Indexes...');
         Mongator::ensureAllIndexes();
 
         $this->info('Done');

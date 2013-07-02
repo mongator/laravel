@@ -6,7 +6,7 @@
 |--------------------------------------------------------------------------
 |
 | MongoDB server connection string
-| 
+|
 | http://es1.php.net/manual/es/mongoclient.construct.php
 |
 */
@@ -19,7 +19,7 @@ $config['connection_dsn'] = 'mongodb://localhost:27017';
 |--------------------------------------------------------------------------
 |
 | MongoDB database name
-| 
+|
 | http://es1.php.net/manual/en/mongoclient.selectdb.php
 |
 */
@@ -32,25 +32,23 @@ $config['connection_database'] = 'database';
 |--------------------------------------------------------------------------
 |
 | Mongator Connection name, just for connection recognition
-| 
+|
 | http://es1.php.net/manual/en/mongoclient.selectdb.php
 |
 */
 
 $config['connection_name'] = 'default';
 
-
 /*
 |--------------------------------------------------------------------------
 | Query Logger
 |--------------------------------------------------------------------------
 |
-| If True enable the Mongator logger  
+| If True enable the Mongator logger
 |
 */
 
 $config['logger'] = true;
-
 
 /*
 |--------------------------------------------------------------------------
@@ -58,7 +56,7 @@ $config['logger'] = true;
 |--------------------------------------------------------------------------
 |
 | The metadata factory class name, just change it if you know what are you
-| doing.  
+| doing.
 |
 */
 
@@ -69,13 +67,12 @@ $config['metadata_class'] = 'Mapping\Metadata';
 | Mongator Models input path
 |--------------------------------------------------------------------------
 |
-| The input path of the classes, A valid dir with YAML definitions of the 
-| config classes, you must save the YAMLs config classes in this path. 
+| The input path of the classes, A valid dir with YAML definitions of the
+| config classes, you must save the YAMLs config classes in this path.
 |
 */
 
 $config['models_input'] = __DIR__ . '/../../../../app/schema/';
-
 
 /*
 |--------------------------------------------------------------------------
@@ -83,7 +80,7 @@ $config['models_input'] = __DIR__ . '/../../../../app/schema/';
 |--------------------------------------------------------------------------
 |
 | The output path of the classes, just change it if you know what are you
-| doing.  
+| doing.
 |
 */
 
@@ -94,8 +91,8 @@ $config['models_output'] = __DIR__ . '/../../../../app/models/';
 | Mongator Extensions
 |--------------------------------------------------------------------------
 |
-| The extensions allow you to add functionalities to documents, 
-| repositories, queries, in an extremely flexible way. It is also very 
+| The extensions allow you to add functionalities to documents,
+| repositories, queries, in an extremely flexible way. It is also very
 | amusing and easy. Just add the instances of the extensions.
 |
 */

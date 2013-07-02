@@ -19,13 +19,14 @@ use Mongator\Laravel\Command\IndexesCommand;
 use Mongator\Laravel\Command\FixReferencesCommand;
 use Mongator\Laravel\Command\GenerateCommand;
 
-
 use Mandango\Mondator\Mondator;
 use Mongator\Extension\Core;
 use Log;
 
-class MongatorServiceProvider extends ServiceProvider {
-    public function register() {
+class MongatorServiceProvider extends ServiceProvider
+{
+    public function register()
+    {
         $this->app['config']->package('mongator/mongator', __DIR__ . '/../../../config');
 
         $this->registerMongator();
@@ -44,13 +45,13 @@ class MongatorServiceProvider extends ServiceProvider {
     {
         $this->app['mongator'] = $this->app->share(function($app) {
             $mongator = new Mongator(
-                $app['mongator.metadata'], 
-                $this->getLogger()           
+                $app['mongator.metadata'],
+                $this->getLogger()
             );
 
             $mongator->setFieldsCache($app['mongator.cache.fields']);
             $mongator->setDataCache($app['mongator.cache.data']);
-            $mongator->setConnection($app['config']['mongator::connection_name'], $app['mandango.connection']);    
+            $mongator->setConnection($app['config']['mongator::connection_name'], $app['mandango.connection']);
             $mongator->setDefaultConnectionName($app['config']['mongator::connection_name']);
 
             return $mongator;
@@ -68,25 +69,25 @@ class MongatorServiceProvider extends ServiceProvider {
 
             return new $app['config']['mongator::metadata_class']();
         });
-    } 
+    }
 
     protected function registerConnection()
     {
         $this->app['mandango.connection'] = $this->app->share(function($app) {
-            if ( !$app['config']['mongator::connection_dsn'] ) {
+            if (!$app['config']['mongator::connection_dsn']) {
                 throw new \LogicException(
                     'You must register "mongator::connection_dsn" to this provider'
                 );
             }
 
-            if ( !$app['config']['mongator::connection_database'] ) {
+            if (!$app['config']['mongator::connection_database']) {
                 throw new \LogicException(
                     'You must register "mongator::connection_database" to this provider'
                 );
             }
 
             return new Connection(
-                $app['config']['mongator::connection_dsn'], 
+                $app['config']['mongator::connection_dsn'],
                 $app['config']['mongator::connection_database']
             );
         });
@@ -109,13 +110,13 @@ class MongatorServiceProvider extends ServiceProvider {
     protected function registerMondator()
     {
         $this->app['mondator'] = $this->app->share(function($app) {
-            if ( !$app['config']['mongator::models_output'] ) {
+            if (!$app['config']['mongator::models_output']) {
                 throw new \LogicException(
                     'You must register "mongator::models_output" to this provider'
                 );
             }
 
-            if ( !$app['config']['mongator::metadata_class'] ) {
+            if (!$app['config']['mongator::metadata_class']) {
                 throw new \LogicException(
                     'You must register "mongator::metadata_class" to this provider'
                 );
@@ -131,7 +132,7 @@ class MongatorServiceProvider extends ServiceProvider {
 
             $mondator = new Mondator();
             $mondator->setExtensions(array_merge(
-                $extensions, 
+                $extensions,
                 $app['config']['mongator::extensions']
             ));
 
@@ -139,16 +140,17 @@ class MongatorServiceProvider extends ServiceProvider {
         });
     }
 
-    protected function getLogger() 
+    protected function getLogger()
     {
         if ( !$this->app['config']['mongator::logger'] ) return null;
 
         $querys = 0;
+
         return function($call) use (&$querys) {
             if ( !isset($call['collection']) ) $call['collection'] = 'none';
             $msg = sprintf(
-                '[mongator] %s@%s.%s in %d sec(s), #%d',  
-                $call['type'], $call['database'], 
+                '[mongator] %s@%s.%s in %d sec(s), #%d',
+                $call['type'], $call['database'],
                 $call['collection'], $call['time'], ++$querys
             );
 

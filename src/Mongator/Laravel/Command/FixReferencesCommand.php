@@ -19,7 +19,7 @@ class FixReferencesCommand extends Command
 
     protected function fire()
     {
-        $this->comment('Fixing missing References...');        
+        $this->comment('Fixing missing References...');
         Mongator::fixAllMissingReferences();
 
         $this->info('Done');
